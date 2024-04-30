@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.Comparator.comparing;
+
 public class ComparatorDemo {
 
     public static void main(String[] args) {
@@ -37,8 +39,22 @@ public class ComparatorDemo {
                 new Apple(50,Color.GREEN)
         );
 
-        Comparator<Apple> sortApple = Comparator.comparing(apple -> apple.getWeight());
+        Comparator<Apple> sortApple = comparing(apple -> apple.getWeight());
         myInventory.sort(sortApple);
+        System.out.println(myInventory);
+
+        myInventory.sort(comparing((apple -> apple.getWeight())));
+        myInventory.sort(comparing(Apple::getWeight));
+
+        //Reversed
+        myInventory.sort(comparing(Apple::getWeight).reversed());
+        System.out.println(myInventory);
+
+        //Chaining
+        myInventory
+                .sort(comparing(Apple::getWeight)
+                        .reversed()
+                            .thenComparing(Apple::getColor));
         System.out.println(myInventory);
 
     }
